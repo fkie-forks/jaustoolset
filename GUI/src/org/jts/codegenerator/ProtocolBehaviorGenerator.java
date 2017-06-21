@@ -2440,6 +2440,9 @@ public class ProtocolBehaviorGenerator {
 				    State fromState = org.jts.codegenerator.support.InheritanceHelper.findStateFromName(from.name, sm);
 				    State toState = org.jts.codegenerator.support.InheritanceHelper.findStateFromName(to.name, sm);
 				    String startState = org.jts.codegenerator.support.InheritanceHelper.findFullInitialStateName( fromState, sm );
+				    if (toState == null) {
+                                        throw new RuntimeException("No state for " + to.name + " found!");
+				    }
 				    String endState = org.jts.codegenerator.support.InheritanceHelper.findFullInitialStateName( toState, sm );
 				            
 				    if ((fromState != null) && !startState.equals(endState) && !from.name.equals(endState))

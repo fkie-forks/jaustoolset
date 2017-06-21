@@ -94,8 +94,13 @@ public class Entry {
 			{
 				org.jts.jsidl.binding.State currentState = stateW.state;
 				
-				// add entry actions for current state
-				addEntryActionsToState(wrapperList, currentState);
+				try {
+					// add entry actions for current state
+					addEntryActionsToState(wrapperList, currentState);
+				} catch (Exception e)
+				{
+					throw new RuntimeException(e.getMessage() + " in current state " + currentState.getName());
+				}
 				
 				// step up in the wrapper 
 				stateW = stateW.parent;
@@ -283,7 +288,9 @@ public class Entry {
 		// find wrapper for end state
 		// this is the wrapper with the endState and all initial states after that
 		org.jts.codegenerator.protocolBehavior.StateWrapper wrapper = org.jts.codegenerator.protocolBehavior.StateWrapper.findMatchingEndStateWrapper(endState, wrapperList);
-		
+		if (wrapper == null) {
+			throw new RuntimeException("No transition " + endState + " found!");
+		}
 		wrapper = org.jts.codegenerator.protocolBehavior.StateWrapper.goToTop(wrapper);
 		
 		// split the current state name
@@ -389,6 +396,9 @@ public class Entry {
 		//** we have to create a special start to replace the start state so that entry action will be executed
 		String startStateName = org.jts.codegenerator.protocolBehavior.State.getFlattenedEndStateName( start.getStateName(), wrapperList );
 
+		if (startStateName == null) {
+			throw new RuntimeException("State " + start.getStateName() + " not found!");
+		}
 		// start state leaf wrapper
 		org.jts.codegenerator.protocolBehavior.StateWrapper wrapper = org.jts.codegenerator.protocolBehavior.StateWrapper.findMatchingBottomWrapper(startStateName, clonedUnflattenedStateWrapperList);
 				
