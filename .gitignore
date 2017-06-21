@@ -1,0 +1,12 @@
+build/
+GUI/templates/Common/Build/
+GUI/db/
+GUI/src/org/jts/docGenerator/indexFiles/binding/
+GUI/src/org/jts/gui/mxGraphtoJAXB/parser/*.java
+GUI/src/org/jts/jsidl/binding/
+GUI/src/org/jts/mxGraph/binding/
+GUI/testmx.xml
+nodeManager/.sconsign.dblite
+nodeManager/bin/
+promelaCodeGenerator/dist/PromelaCodeGenerator.jar
+promelaCodeGenerator/src/org/jts/jsidl/binding/
