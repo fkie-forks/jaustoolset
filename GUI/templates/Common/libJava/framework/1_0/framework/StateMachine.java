@@ -149,7 +149,7 @@ public class StateMachine{
 	{
 		if (state.contains("."))
 			state = state.substring(state.lastIndexOf(".")+1);
-		for (int i=0; i < notifications.size(); i++)
+		for (unsigned int i=0; i < notifications.size(); i++)
 		{
 			if (notifications.get(i)._state.compareTo( state ) == 0)
 			{
