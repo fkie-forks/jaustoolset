@@ -1341,7 +1341,8 @@ public class CppCode
      */
      static public String makeNamespace(String id, String version)
     {
-        char[] ns = (id+"_"+version).toCharArray();
+//        char[] ns = (id+"_"+version).toCharArray();
+        char[] ns = (id).toCharArray();
         for(int i=0; i<ns.length; i++)
         {
             if (!((ns[i]>='0' && ns[i]<='9')
