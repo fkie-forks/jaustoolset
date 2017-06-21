@@ -43,6 +43,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "InternalEvents/Send_1_0.h"
 #include "InternalEvents/Receive_1_1.h"
 #include "InternalEvents/Send_1_1.h"
+#include "InternalEvents/Receive.h"
+#include "InternalEvents/Send.h"
 #include "InternalEvents/InternalEventHandler.h"
 #include "JausAddress.h"
 #include "SimpleThread.h"
@@ -66,6 +68,7 @@ public:
 
 	enum TransportType {Version_1_0, Version_1_1};
 	
+	void sendMessage(Send* msg);
 	void sendMessage(Send_1_0* msg);
 	void sendMessage(Send_1_1* msg);
 	void routeMessage(JausAddress sender, unsigned int bufsize, const unsigned char* buffer);

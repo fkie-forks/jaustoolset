@@ -578,13 +578,15 @@ public class ProtocolBehaviorGenerator {
 
         // Set-up Send/Receive aliases
         StringBuffer smAliases = new StringBuffer();
-        if (transportVersion.equals("1.1")) {
-            smAliases.append("typedef JTS::Receive_1_1 Receive;").append(System.getProperty("line.separator"));
-            smAliases.append("typedef JTS::Send_1_1 Send;").append(System.getProperty("line.separator"));
-        } else {
-            smAliases.append("typedef JTS::Receive_1_0 Receive;").append(System.getProperty("line.separator"));
-            smAliases.append("typedef JTS::Send_1_0 Send;").append(System.getProperty("line.separator"));
-        }
+        // if (transportVersion.equals("1.1")) {
+        //     smAliases.append("typedef JTS::Receive_1_1 Receive;").append(System.getProperty("line.separator"));
+        //     smAliases.append("typedef JTS::Send_1_1 Send;").append(System.getProperty("line.separator"));
+        // } else {
+        //     smAliases.append("typedef JTS::Receive_1_0 Receive;").append(System.getProperty("line.separator"));
+        //     smAliases.append("typedef JTS::Send_1_0 Send;").append(System.getProperty("line.separator"));
+        // }
+        smAliases.append("typedef JTS::Receive Receive;").append(System.getProperty("line.separator"));
+        smAliases.append("typedef JTS::Send Send;").append(System.getProperty("line.separator"));
 
         //---------------------------
         // Now we generate the files for the action and guard definitions
@@ -2444,7 +2446,7 @@ public class ProtocolBehaviorGenerator {
                                         throw new RuntimeException("No state for " + to.name + " found!");
 				    }
 				    String endState = org.jts.codegenerator.support.InheritanceHelper.findFullInitialStateName( toState, sm );
-				            
+                                    
 				    if ((fromState != null) && !startState.equals(endState) && !from.name.equals(endState))
 				    {
 				        // Create a simple transition with the internal event as the trigger

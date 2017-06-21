@@ -37,7 +37,9 @@ sources = [
     'Build/InternalEvents/Send_1_0.cpp',
     'Build/InternalEvents/Receive_1_0.cpp',
     'Build/InternalEvents/Send_1_1.cpp',
-    'Build/InternalEvents/Receive_1_1.cpp'    
+    'Build/InternalEvents/Receive_1_1.cpp',
+    'Build/InternalEvents/Receive.cpp',
+    'Build/InternalEvents/Send.cpp'
 ]
 
 # Build the library

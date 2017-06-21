@@ -114,7 +114,7 @@ inline void StateMachine::sendJausMessage(const jUnsignedInteger bufsize,
 	// Send the response.  We enclose
 	// the response message in a transport envelope that includes
 	// the destination address.
-	Send_1_0 response;
+	Send response;
 	response.getBody()->getSendRec()->getMessagePayload()->set(bufsize, buffer);
 	response.getBody()->getSendRec()->setDestSubsystemID(dest.getSubsystemID());
 	response.getBody()->getSendRec()->setDestNodeID(dest.getNodeID());
@@ -139,7 +139,7 @@ inline void StateMachine::processNotifications(std::string state, InternalEvent*
 {
 	if (state.find("::") != std::string::npos)
 		state = state.substr(state.find_last_of("::")+1);
-	for (int i=0; i < notifications.size(); i++)
+	for (unsigned int i=0; i < notifications.size(); i++)
 	{
 		if (notifications[i]->_state == state)
 		{

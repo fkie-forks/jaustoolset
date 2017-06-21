@@ -204,11 +204,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\InternalEvents\Receive.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\InternalEvents\Send_1_0.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\InternalEvents\Send_1_1.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\InternalEvents\Send.cpp"
 					>
 				</File>
 			</Filter>
@@ -358,11 +366,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\InternalEvents\Rec.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\InternalEvents\Send_1_0.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\InternalEvents\Send_1_1.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\InternalEvents\Send.h"
 					>
 				</File>
 			</Filter>

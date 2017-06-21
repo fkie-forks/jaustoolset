@@ -30,8 +30,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 *********************  END OF LICENSE ***********************************/
 
-#ifndef JTS_SEND_H
-#define JTS_SEND_H
+#ifndef JTS_SEND_1_0_H
+#define JTS_SEND_1_0_H
 
 #include "JausUtils.h"
 #include "InternalEvent.h"
