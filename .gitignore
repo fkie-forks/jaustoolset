@@ -9,6 +9,10 @@ GUI/src/org/jts/mxGraph
 GUI/src/org/jts/validator/parsers/GuardParser.java
 GUI/src/org/jts/validator/parsers/GuardParserConstants.java
 GUI/src/org/jts/validator/parsers/GuardParserTokenManager.java
+GUI/src/org/jts/validator/parsers/ParseException.java
+GUI/src/org/jts/validator/parsers/SimpleCharStream.java
+GUI/src/org/jts/validator/parsers/Token.java
+GUI/src/org/jts/validator/parsers/TokenMgrError.java
 GUI/testmx.xml
 nodeManager/.sconsign.dblite
 nodeManager/bin/
