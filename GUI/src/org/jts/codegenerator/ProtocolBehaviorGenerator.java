@@ -585,8 +585,8 @@ public class ProtocolBehaviorGenerator {
         //     smAliases.append("typedef JTS::Receive_1_0 Receive;").append(System.getProperty("line.separator"));
         //     smAliases.append("typedef JTS::Send_1_0 Send;").append(System.getProperty("line.separator"));
         // }
-        smAliases.append("typedef JTS::Receive Receive;").append(System.getProperty("line.separator"));
-        smAliases.append("typedef JTS::Send Send;").append(System.getProperty("line.separator"));
+        smAliases.append("#include \"InternalEvents/Receive.h\"").append(System.getProperty("line.separator"));
+        smAliases.append("#include \"InternalEvents/Send.h\"").append(System.getProperty("line.separator"));
 
         //---------------------------
         // Now we generate the files for the action and guard definitions
