@@ -591,7 +591,8 @@ JrErrorCode JuniorMgr::connect(unsigned int id,  std::string config_file)
 
     // Spawn the RTE.  Note that hte spawn process will 
     // ensure that we don't create a duplicate.
-    JrSpawnProcess("NodeManager", config_file);
+    // NOTE: We assume that someone else runs NodeManager for us.
+    // JrSpawnProcess("NodeManager", config_file);
 	
     // The name of our local socket is the string form of our ID.
     std::stringstream name; name << id;
