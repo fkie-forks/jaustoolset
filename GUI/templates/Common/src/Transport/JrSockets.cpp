@@ -1,7 +1,7 @@
-/*! 
+/*!
  ***********************************************************************
  * @file      JrSockets.cpp
- * @author    Dave Martin, DeVivo AST, Inc.  
+ * @author    Dave Martin, DeVivo AST, Inc.
  * @date      2008/03/03
  *
  *  Copyright (C) 2008. DeVivo AST, Inc
@@ -23,6 +23,8 @@
  *
  ************************************************************************
  */
+
+#include "Transport/JausAddress.h"
 #include "Transport/JrSockets.h"
 #include "Transport/ConfigData.h"
 #include "Transport/JrLogger.h"
@@ -52,7 +54,7 @@ JrSocket::JrSocket(std::string name):
 
 JrSocket::~JrSocket()
 {
-    if (sock) 
+    if (sock)
     {
 #ifdef WINDOWS
         CloseHandle(sock);
@@ -96,8 +98,8 @@ void JrSocket::setWaitType( enum SocketWaitType type )
 SocketId JrSocket::OpenMailslot(std::string name)
 {
     std::stringstream s; s << SOCK_PATH; s << name;
-    return CreateFile(s.str().c_str(), 
-         GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, 
+    return CreateFile(s.str().c_str(),
+         GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
          NULL, OPEN_EXISTING, 0, NULL);
 }
 #endif
@@ -112,7 +114,7 @@ void JrSocket::openResponseChannel(Message* msg)
     {
         std::stringstream s; s << msg->getSourceId().val;
         HANDLE source = OpenMailslot(s.str());
-        if (source != INVALID_HANDLE_VALUE) 
+        if (source != INVALID_HANDLE_VALUE)
             _map.addElement(msg->getSourceId(), source, AS5669);
     }
 #else
@@ -129,14 +131,14 @@ Transport::TransportError JrSocket::sendMsg(Message& msg, SocketId sockname)
 	// version depends on the setting of the message code.
     JUDPArchive archive;
 	archive.pack(msg, msg.getMessageCode() == 0 ? AS5669A : AS5669);
-	JrDebug << "Sending socket message to " << msg.getDestinationId().val << std::endl;
+	JrDebug << "Sending socket message to " << msg.getDestinationId().val << " (" << JausAddress(msg.getDestinationId().val).str() << ")" << std::endl;
 
     // Send to the given socket
 #ifdef WINDOWS
     DWORD cbWritten;
-    bool fSuccess = WriteFile( sockname, archive.getArchive(), 
+    bool fSuccess = WriteFile( sockname, archive.getArchive(),
         archive.getArchiveLength(), &cbWritten, NULL);
-    if (!fSuccess || (cbWritten != archive.getArchiveLength())) 
+    if (!fSuccess || (cbWritten != archive.getArchiveLength()))
 	{
 		JrError << "Unable to write on local socket (" << cbWritten << " of "
 			<< archive.getArchiveLength() << "written)\n";
@@ -149,7 +151,7 @@ Transport::TransportError JrSocket::sendMsg(Message& msg, SocketId sockname)
     memcpy(addr.sun_path, sockname.c_str(), sockname.length());
     int ret = sendto(sock, archive.getArchive(), archive.getArchiveLength(), 0,
        (struct sockaddr *)&addr, sizeof(struct sockaddr_un));
-    if (ret != archive.getArchiveLength()) 
+    if (ret != archive.getArchiveLength())
 	{
 		JrError << "Unable to write on local socket (" << ret << " of "
 			<< archive.getArchiveLength() << "written)\n";
@@ -175,7 +177,7 @@ Transport::TransportError JrSocket::sendMsg(Message& msg)
     {
         // Otherwise, send to the destination id specified.  Note that the destination
         // specified in the message may contain wildcard characters.  We need to loop
-        // through all known destinations, sending to any that match (except the source). 
+        // through all known destinations, sending to any that match (except the source).
         JAUS_ID dest = msg.getDestinationId();
 		for (int i = 0; i < _map.getList().size(); i++)
         {
@@ -212,10 +214,10 @@ Transport::TransportError JrSocket::recvMsg(MessageList& msglist)
     {
 
 #ifdef WINDOWS
- 
+
         // Read the mailslot as if it's a file descriptor
         bool fSuccess; DWORD bytesread;
-        fSuccess = ReadFile( sock, buffer, 5000, &bytesread, NULL);  
+        fSuccess = ReadFile( sock, buffer, 5000, &bytesread, NULL);
         if (!fSuccess) break;
         bytes = bytesread;
 
@@ -235,15 +237,15 @@ Transport::TransportError JrSocket::recvMsg(MessageList& msglist)
         memset(addr.sun_path, 0, sizeof(addr.sun_path));
         addr.sun_family = AF_UNIX;
         int addr_len = sizeof(struct sockaddr_un);
-        bytes = recvfrom(sock, buffer, 5000, 0, 
-                         (struct sockaddr*)&addr, 
+        bytes = recvfrom(sock, buffer, 5000, 0,
+                         (struct sockaddr*)&addr,
                          (socklen_t*) &addr_len);
 
 #endif
 
         // If we didn't receive anything, break from the read loop.
         if (bytes <= 0) break;
- 
+
         // Now that we have a datagram in our buffer, move it to an archive.
         JUDPArchive archive;
         archive.setData(buffer, bytes);
@@ -252,7 +254,7 @@ Transport::TransportError JrSocket::recvMsg(MessageList& msglist)
         Message* msg = new Message();
         archive.unpack(*msg);
 
-		JrDebug << "Received socket message from " << msg->getSourceId().val << std::endl;
+		JrDebug << "Received socket message from " << msg->getSourceId().val << " (" << JausAddress(msg->getSourceId().val).str() << ")" << std::endl;
 
         // If we're not a connected socket, open a response
         // channel to the sender so we can talk to it later.
@@ -301,8 +303,8 @@ Transport::TransportError JrSocket::initialize(ConfigData& config)
     // Windows named pipes.
 #ifdef WINDOWS
     std::stringstream s; s << SOCK_PATH; s << _socket_name;
-	DWORD timeout = (_type == POLL) ? 0 : MAILSLOT_WAIT_FOREVER; 
-    sock = CreateMailslot(s.str().c_str(), 0, timeout, NULL); 
+	DWORD timeout = (_type == POLL) ? 0 : MAILSLOT_WAIT_FOREVER;
+    sock = CreateMailslot(s.str().c_str(), 0, timeout, NULL);
     if (sock == INVALID_HANDLE_VALUE)
     {
         JrError << "Internal error.  Cannot initialize mailslot for IPC comms\n";
@@ -346,7 +348,7 @@ Transport::TransportError JrSocket::initialize(ConfigData& config)
 Transport::TransportError JrSocket::setDestination(std::string destination)
 {
     // Connect to the given endpoint
-    
+
 #ifdef WINDOWS
     _connected_dest = OpenMailslot(destination);
     if (_connected_dest == INVALID_HANDLE_VALUE) return Failed;
