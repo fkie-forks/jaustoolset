@@ -43,6 +43,7 @@ public:
 	JausAddress();
 	JausAddress(jUnsignedShortInteger subsystemID, jUnsignedByte nodeID, jUnsignedByte componentID);
 	JausAddress(jUnsignedInteger value);
+	JausAddress(JausAddress const& from);
 	virtual ~JausAddress();
 
 	std::string str() {
@@ -50,6 +51,7 @@ public:
 		result << getSubsystemID() << "." << (int)getNodeID() << "." << (int)getComponentID();
 		return result.str();
 	}
+	const JausAddress& operator=(const JausAddress& from);
 //	bool operator==(const JausAddress &value) const;
 //	bool operator!=(const JausAddress &value) const;
 
@@ -59,7 +61,7 @@ public:
 	virtual int setNodeID(jUnsignedByte value);
 	virtual jUnsignedByte getComponentID();
 	virtual int setComponentID(jUnsignedByte value);
-	virtual jUnsignedInteger get();
+	virtual jUnsignedInteger get() const;
 
 	virtual bool isLocalSubsystem(jUnsignedShortInteger sID);
 	virtual bool isLocalSubsystem(JausAddress address);
