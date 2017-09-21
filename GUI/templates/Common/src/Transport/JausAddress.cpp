@@ -67,12 +67,13 @@ JausAddress::JausAddress(jUnsignedInteger value)
 
 JausAddress::JausAddress(JausAddress const& from)
 {
-	address = malloc(sizeof(from.get()));
-	if (address != NULL)
-	{
-		size = sizeof(jUnsignedInteger);
-		*((jUnsignedInteger*) address) = 0;
-	}
+	address = malloc(sizeof(jUnsignedInteger));
+	if (address == NULL) return;
+	else size = sizeof(jUnsignedInteger);
+
+	jUnsignedInteger tempValue;
+	tempValue = from.get();
+	*((jUnsignedInteger*)address) = tempValue;
 }
 
 JausAddress::~JausAddress()
@@ -85,15 +86,13 @@ const JausAddress& JausAddress::operator=(const JausAddress& from)
 {
 	if (this != &from)
 	{
-		if ((address != NULL) && (size == from.size))
-			memcpy(address, from.address, from.size);
-		else
-		{
-			if (address != NULL) free(address);
-			address = malloc(from.size);
-			memcpy(address, from.address, from.size);
-			size = from.size;
-		}
+		address = malloc(sizeof(jUnsignedInteger));
+		if (address == NULL) return *this;
+		else size = sizeof(jUnsignedInteger);
+
+		jUnsignedInteger tempValue;
+		tempValue = from.get();
+		*((jUnsignedInteger*)address) = tempValue;
 	}
 	return *this;
 }
