@@ -36,6 +36,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "JausUtils.h"
 #include "InternalEvents/InternalEvent.h"
 #include "Transport/OS.h"
+#include "Transport/JausAddress.h"
 // removed namespace to avoid compiler erro C2872 in visual studio
 //namespace JTS
 //{
@@ -91,6 +92,7 @@ public:
 				jUnsignedInteger m_Length;
 				unsigned char *m_Data;
 			};
+			JausAddress getAddress();
 			/** --begin -- Receive 1.0 compatibility **/
 			jUnsignedShortInteger getSrcSubsystemID();
 			int setSrcSubsystemID(jUnsignedShortInteger value);

@@ -455,6 +455,12 @@ int Receive::Body::ReceiveRec::setMessagePayload(const MessagePayload &value)
 	return 0;
 }
 
+JausAddress Receive::Body::ReceiveRec::getAddress()
+{
+	return JausAddress(getSourceID()->getSubsystemID(), getSourceID()->getNodeID(), getSourceID()->getComponentID());
+}
+
+
 /**
  * Returns the size of memory the used data members of the class occupies.
  * This is not necessarily the same size of memory the class actually occupies.
