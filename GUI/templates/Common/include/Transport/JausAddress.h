@@ -52,8 +52,8 @@ public:
 		return result.str();
 	}
 	const JausAddress& operator=(const JausAddress& from);
-//	bool operator==(const JausAddress &value) const;
-//	bool operator!=(const JausAddress &value) const;
+	bool operator==(const JausAddress &value) const;
+	bool operator!=(const JausAddress &value) const;
 
 	virtual jUnsignedShortInteger getSubsystemID();
 	virtual int setSubsystemID(jUnsignedShortInteger value);
