@@ -32,7 +32,7 @@
 #ifndef WINDOWS
 #define WINDOWS
 #endif
-    #include "Winsock.h"
+    #include "winsock2.h"
     typedef int socklen_t;
     typedef signed __int8     int8_t;
     typedef signed __int16    int16_t;
