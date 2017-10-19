@@ -33,6 +33,7 @@
 #define WINDOWS
 #endif
     #include "winsock2.h"
+    #include "ws2ipdef.h"
     typedef int socklen_t;
     typedef signed __int8     int8_t;
     typedef signed __int16    int16_t;
@@ -43,17 +44,6 @@
 	typedef signed __int64    int64_t;
     typedef unsigned __int64  uint64_t;
 	
-	#define IP_MULTICAST_IF     2           /* set/get IP multicast interface   */
-	#define IP_MULTICAST_TTL    3           /* set/get IP multicast timetolive  */
-	#define IP_MULTICAST_LOOP   4           /* set/get IP multicast loopback    */
-	#define IP_ADD_MEMBERSHIP   5           /* add  an IP group membership      */
-	#define IP_DROP_MEMBERSHIP  6           /* drop an IP group membership      */
-
-	struct ip_mreq {
-        struct in_addr  imr_multiaddr;  /* IP multicast address of group */
-        struct in_addr  imr_interface;  /* local IP address of interface */
-    };
-
 #ifndef DllExport
 #define DllExport __declspec( dllexport )
 #endif
