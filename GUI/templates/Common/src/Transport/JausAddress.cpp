@@ -107,6 +107,11 @@ bool JausAddress::operator!=(const JausAddress &value) const
 	return get() != value.get();
 }
 
+bool JausAddress::operator<(const JausAddress &value) const
+{
+	return get() < value.get();
+}
+
 jUnsignedInteger JausAddress::get() const
 {
 	return *((jUnsignedInteger*)address);
