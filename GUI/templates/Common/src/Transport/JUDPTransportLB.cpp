@@ -139,7 +139,7 @@ Transport::TransportError JUDPTransportLB::initialize( ConfigData& config )
         mreq.imr_interface.s_addr = *addy;
         if (setsockopt (_socket, IPPROTO_IP, IP_ADD_MEMBERSHIP, 
             (const char*) &mreq, sizeof(mreq)) != 0)
-            JrError << "Error joining multicast group : " << getSocketError << std::endl;
+            JrError << "Error joining multicast group on LB interface '" << inet_ntoa(*(in_addr*) &mreq.imr_interface.s_addr) << "': " << getSocketError << std::endl;
 
         JrInfo << "Found network interface: " << 
             inet_ntoa(*(in_addr*) &mreq.imr_interface.s_addr) << std::endl;

@@ -128,7 +128,7 @@ Transport::TransportError JUDPTransport::initialize( ConfigData& config )
     mreq.imr_interface.s_addr = INADDR_ANY;
     if (setsockopt (_socket, IPPROTO_IP, IP_ADD_MEMBERSHIP, 
             (const char*) &mreq, sizeof(mreq)) != 0)
-			JrError << "Error joining multicast group : " << getSocketError << std::endl;
+			JrError << "Error joining multicast group on any address: " << getSocketError << std::endl;
 
     // Using INADDR_ANY causes us to join the multicast group, but only
     // on the default NIC.  When multiple NICs are present, we need to join
@@ -140,8 +140,9 @@ Transport::TransportError JUDPTransport::initialize( ConfigData& config )
     {
         mreq.imr_interface.s_addr = *addy;
         if (setsockopt (_socket, IPPROTO_IP, IP_ADD_MEMBERSHIP, 
-            (const char*) &mreq, sizeof(mreq)) != 0)
-			JrError << "Error joining multicast group : " << getSocketError << std::endl;
+            (const char*) &mreq, sizeof(mreq)) != 0 && getSocketError != 98)
+                        // do not print error if it is allready in use. This is already bind by join to any address.
+			JrError << "Error joining multicast group on interface '" << inet_ntoa(*(in_addr*) &mreq.imr_interface.s_addr) << "': " << getSocketError << std::endl;
 
 		JrInfo << "Found network interface: " << 
 			inet_ntoa(*(in_addr*) &mreq.imr_interface.s_addr) << std::endl;
